@@ -73,7 +73,7 @@ playGameBtn.onclick = () => {
         }
         if (counter == 10) {
             clearInterval(gameIntervalId);
-            flagsSection.innerHTML = `<img src="./gif-good-job.gif" alt="" id="goodJobGif">`
+            container.innerHTML = `<img src="./gif-good-job.gif" alt="" id="goodJobGif">`
         }
         else {
             counterParagraph.innerText = counter = 0;
