@@ -1,4 +1,4 @@
-var countries = [
+const COUNTRIES_ARRAY = [
     {
         countryName: "Israel",
         countryFlag: "https://cdn.pixabay.com/photo/2018/01/28/17/42/flag-3114272_960_720.jpg"
@@ -41,17 +41,18 @@ var countries = [
     },
 ];
 
+const countriesImages = document.getElementsByClassName("countriesImages");
 
-var countriesImages = document.getElementsByClassName("countriesImages");
-var counter = 0;
+let counter = 0;
 
-for (var i = 0; i < countriesImages.length; i++) {
-    countriesImages[i].src = countries[i].countryFlag;
-};
+for (let country of COUNTRIES_ARRAY) {
+    flagsSection.innerHTML += `<img src="${country.countryFlag}" alt="" class="countriesImages">`
+}
 
 playGameBtn.onclick = () => {
+    playGameBtn.disabled = true;
     playGameBtn.innerText = 3;
-    var countdownId = window.setInterval(() => {
+    let countdownId = setInterval(() => {
         playGameBtn.innerText--;
         if (playGameBtn.innerText == 0) {
             window.clearInterval(countdownId);
@@ -59,95 +60,23 @@ playGameBtn.onclick = () => {
         }
     }, 1000);
 
-    var gameIntervalId = window.setInterval(() => {
-
-        for (var i = 0; i < countriesImages.length; i++) {
-            countriesImages[i].style.position = "absolute";
-            countriesImages[i].style.display = "block";
-            countriesImages[i].style.left = `${Math.floor(Math.random() * 90)}vw`;
-            countriesImages[i].style.top = `${Math.floor(Math.random() * 30)}vh`;
-        };
-
-        countriesImages[0].onclick = (event) => {
-            console.log(`X is:${event.x}, Y is:${event.y}`);
-            counter++;
-            counterParagraph.innerText = counter;
-            countriesImages[0].style.display = "none";
-        };
-
-        countriesImages[1].onclick = (event) => {
-            console.log(`X is:${event.x}, Y is:${event.y}`);
-            counter++;
-            counterParagraph.innerText = counter;
-            countriesImages[1].style.display = "none";
-        };
-
-        countriesImages[2].onclick = (event) => {
-            console.log(`X is:${event.x}, Y is:${event.y}`);
-            counter++;
-            counterParagraph.innerText = counter;
-            countriesImages[2].style.display = "none";
-        };
-
-        countriesImages[3].onclick = (event) => {
-            console.log(`X is:${event.x}, Y is:${event.y}`);
-            counter++;
-            counterParagraph.innerText = counter;
-            countriesImages[3].style.display = "none";
-        };
-
-        countriesImages[4].onclick = (event) => {
-            console.log(`X is:${event.x}, Y is:${event.y}`);
-            counter++;
-            counterParagraph.innerText = counter;
-            countriesImages[4].style.display = "none";
-        };
-
-        countriesImages[5].onclick = (event) => {
-            console.log(`X is:${event.x}, Y is:${event.y}`);
-            counter++;
-            counterParagraph.innerText = counter;
-            countriesImages[5].style.display = "none";
-        };
-
-        countriesImages[6].onclick = (event) => {
-            console.log(`X is:${event.x}, Y is:${event.y}`);
-            counter++;
-            counterParagraph.innerText = counter;
-            countriesImages[6].style.display = "none";
-        };
-        countriesImages[7].onclick = (event) => {
-            console.log(`X is:${event.x}, Y is:${event.y}`);
-            counter++;
-            counterParagraph.innerText = counter;
-            countriesImages[7].style.display = "none";
-        };
-
-        countriesImages[8].onclick = (event) => {
-            console.log(`X is:${event.x}, Y is:${event.y}`);
-            counter++;
-            counterParagraph.innerText = counter;
-            countriesImages[8].style.display = "none";
-        };
-
-        countriesImages[9].onclick = (event) => {
-            console.log(`X is:${event.x}, Y is:${event.y}`);
-            counter++;
-            counterParagraph.innerText = counter;
-            countriesImages[9].style.display = "none";
-        };
-
-
+    let gameIntervalId = setInterval(() => {
+        for (let country of countriesImages) {
+            let positionLeft = `${Math.floor(Math.random() * 90)}%`;
+            let positionTop = `${Math.floor(Math.random() * 60)}%`;
+            country.style = `position: absolute; display: block; left: ${positionLeft}; top: ${positionTop}`;
+            country.onclick = () => {
+                counter++;
+                counterParagraph.innerText = counter;
+                country.style.display = "none";
+            }
+        }
         if (counter == 10) {
-            goodJobGif.style.display = "block";
-            window.clearInterval(gameIntervalId);
-            for (var i = 0; i < countriesImages.length; i++) {
-                countriesImages[i].style.display = "none";
-            };
+            clearInterval(gameIntervalId);
+            flagsSection.innerHTML = `<img src="./gif-good-job.gif" alt="" id="goodJobGif">`
         }
         else {
-            counter = 0;
-            counterParagraph.innerText = counter;
+            counterParagraph.innerText = counter = 0;
         };
     }, 3000);
 };
